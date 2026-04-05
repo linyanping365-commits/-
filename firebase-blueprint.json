@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user profile information and roles.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user ID" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "DailyStats": {
+      "title": "Daily Analytics",
+      "description": "Aggregated stats for a specific day.",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date", "description": "YYYY-MM-DD" },
+        "approvedIncome": { "type": "number" },
+        "pendingIncome": { "type": "number" },
+        "conversions": { "type": "integer" },
+        "clicks": { "type": "integer" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      },
+      "required": ["date", "approvedIncome", "pendingIncome", "conversions", "clicks"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/daily_stats/{date}": {
+      "schema": "DailyStats",
+      "description": "Daily analytics data indexed by date string."
+    }
+  }
+}
